@@ -1,0 +1,43 @@
+body {
+    background-color: #000000;
+}
+
+#gameContainer {
+    margin-top: 30px;
+}
+
+#elevator {
+    background-color: darkgray;
+}
+
+#tower {
+    background-color: #808080;
+}
+
+.level {
+    border: 1px solid red;
+    padding: 5px;
+}
+
+#lobby, #transport-lobby {
+    background-color: green;
+}
+
+#lift {
+    width: 100%;
+    height: 100%;
+    background-color: red;
+}
+
+/*
+DEBUG
+*/
+
+#dumpOut {
+    margin-top: 10px;
+}
+
+@media(max-width:767px){}
+@media(min-width:768px){}
+@media(min-width:992px){}
+@media(min-width:1200px){}
