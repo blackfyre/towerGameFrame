@@ -15,36 +15,56 @@ function towerLevel(loc,no) {
     return '<div class="level" id="level-' + loc + '-' + no + '"></div>';
 }
 
-function addLevelAbove() {
-    if (setBaseCurrency('dec', 100) == true) {
-        event.preventDefault();
-        var levels = $("[id*='level-a']");
-        var count = parseInt($.map(levels,function (n, i) {
-            return i;
-        }).length);
-        tower.prepend(towerLevel('a',(count + 1)));
-        shaft.prepend(transportLevel('a',(count + 1)));
-    } else {
-        alert('Need more credits');
+
+/*
+Adding a level above the lobby
+ */
+function addLevel(type, free) {
+
+    /*
+    Get the levels
+     */
+    var levels = $("[id*='level-" + type + "']");
+    var count = parseInt($.map(levels,function (n, i) {
+        return i;
+    }).length);
+
+    if (type!='a' || type != 'b') {
+        return false;
     }
+
+    /*
+    If it's a free insert, then do nothing but insert the level
+     */
+    if (free == true) {
+        if (type == 'a') {
+            tower.prepend(towerLevel(type,(count + 1)));
+            shaft.prepend(transportLevel(type,(count + 1)));
+        } else {
+            tower.append(towerLevel(type,(count + 1)));
+            shaft.append(transportLevel(type,(count + 1)));
+        }
+    } else {
+        /*
+        Decrease the currency if possible, and insert the new level
+         */
+        if (setBaseCurrency('dec', 100) == true) {
+            if (type == 'a') {
+                tower.prepend(towerLevel(type,(count + 1)));
+                shaft.prepend(transportLevel(type,(count + 1)));
+            } else {
+                tower.append(towerLevel(type,(count + 1)));
+                shaft.append(transportLevel(type,(count + 1)));
+            }
+        } else {
+            alert('Need more credits');
+        }
+    }
+
+    return true
 
 }
 
-function addLevelBeyond() {
-
-    if (setBaseCurrency('dec', 100) == true) {
-        var levels = $("[id*='level-b']");
-        var count = parseInt($.map(levels,function (n, i) {
-            return i;
-        }).length);
-        tower.append('<div class="level" id="level-b-' + (count + 1) + '"></div>');
-        shaft.append('<div class="level" id="transport-b-' + (count + 1) + '"></div>');
-    } else {
-        alert('Need more credits');
-    }
-
-
-}
 
 function moveTransportUp() {
     var currentPosition = lift.parent('div').attr('id');
